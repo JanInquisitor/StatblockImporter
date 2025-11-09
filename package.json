@@ -1,0 +1,17 @@
+{
+  "name": "statblock-importer-hyp3e",
+  "version": "1.0.0",
+  "description": "Statblock Importer for Hyperborea system",
+  "scripts": {
+    "build": "tsc && npm run copy",
+    "copy": "cpx \"module.json\" dist/ && cpx \"lang/**/*\" dist/lang && cpx \"templates/**/*\" dist/templates && cpx \"styles/**/*\" dist/styles",
+    "watch": "concurrently \"tsc -w\" \"cpx \\\"module.json\\\" dist/ -w\" \"cpx \\\"lang/**/*\\\" dist/lang -w\" \"cpx \\\"templates/**/*\\\" dist/templates -w\" \"cpx \\\"styles/**/*\\\" dist/styles -w\"",
+    "clean": "rm -rf dist"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "cpx": "^1.5.0",
+    "typescript": "^5.5.3"
+  },
+  "private": true
+}

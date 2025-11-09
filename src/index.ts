@@ -1,0 +1,26 @@
+function hello(n1: number, n2: number): string {
+    return 'Hello World'
+}
+
+console.log('Happy developing ✨')
+
+
+// @ts-ignore
+Hooks.once('init', () => {
+    console.log('Module initialized');
+});
+
+// Access game globals (use any assertions if needed)
+// @ts-ignore
+Hooks.once('ready', () => {
+    // @ts-ignore
+    const actors = (game as any).actors;
+    console.log('Actors:', actors);
+});
+
+// Or just use @ts-ignore for specific lines
+// @ts-ignore
+Hooks.once('ready', () => {
+    // @ts-ignore
+    console.log('Game version:', game.version);
+});
