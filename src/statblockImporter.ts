@@ -1,13 +1,9 @@
-function hello(n1: number, n2: number): string {
-    return 'Hello World'
-}
 
 console.log('Happy developing ✨')
 
-
 // @ts-ignore
 Hooks.once('init', () => {
-    console.log('Module initialized');
+    console.log('Statblock Importer Module initialized');
 });
 
 // Access game globals (use any assertions if needed)

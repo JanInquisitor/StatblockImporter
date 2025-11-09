@@ -1,28 +1,27 @@
 {
-  "id": "statblock-importer-hyp3e",
-  "title": "Statblock Importer — Hyperborea",
-  "description": "Paste a statblock and create an in-world Actor for the Hyperborea system.",
+  "id": "hyperborea-statblock-importer",
+  "title": "Hyperborea Statblock Importer",
+  "description": "Paste a statblock and create an in-world Actor for the Hyperborea 3rd Edition system.",
   "version": "1.0.0",
   "authors": [
     {
-      "name": "Your Name"
+      "name": "JanInquisitor"
     }
   ],
   "compatibility": {
-    "minimum": "13",
+    "minimum": "12",
     "verified": "13",
     "maximum": "13"
   },
-  "esmodules": ["index.js"],
-  "styles": [],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "lang/en.json"
-    }
-  ],
-  "packs": [],
-  "systems": ["hyp3e"],
+  "esmodules": ["statblockImporter.js"],
+  "languages": [],
+  "relationships": {
+    "systems": [
+      {
+        "id": "hyp3e",
+        "type": "system"
+      }
+    ]
+  },
   "license": "MIT"
 }
