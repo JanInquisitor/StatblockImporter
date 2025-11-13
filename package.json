@@ -9,8 +9,9 @@
     "clean": "rm -rf dist"
   },
   "devDependencies": {
+    "@types/jquery": "^3.5.33",
     "concurrently": "^8.2.2",
-    "cpx": "^1.5.0",
+    "cpx": "^1.2.1",
     "typescript": "^5.5.3"
   },
   "private": true
