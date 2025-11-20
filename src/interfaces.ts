@@ -1,8 +1,3 @@
-// ============================================================================
-// HYPERBOREA 3E STATBLOCK IMPORTER
-// Improved version with DCC best practices
-// ============================================================================
-
 interface ParsedActor {
     name: string;
     type: 'character' | 'npc';
