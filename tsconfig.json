@@ -12,6 +12,7 @@
     "outDir": "C:\\Users\\PC\\AppData\\Local\\FoundryVTT\\Data\\modules\\hyperborea-statblock-importer",
     "rootDir": "./src"
   },
-  "include": ["src"],
+//  "include": ["src", ],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }
