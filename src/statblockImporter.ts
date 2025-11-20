@@ -1,15 +1,6 @@
 import {CharacterNPC, parseCharacterStatBlock, parseStatBlock} from "./parser.js";
 import {mapMonsterToFoundry, mapToFoundryActor} from "./mapper.js";
 
-
-// @ts-ignore
-Hooks.once('ready', () => {
-    // @ts-ignore
-    if (game.system.id !== 'hyp3e') return;
-    // @ts-ignore
-    console.log('Game version:', game.version);
-});
-
 // @ts-ignore
 Hooks.once('init', () => {
     // @ts-ignore
@@ -28,7 +19,7 @@ Hooks.on('renderActorDirectory', (app, html, data) => {
 
     // Create the button element
     const importButton = $(`
-    <button class="statblock-import-button">
+    <button class="statblock-import-button" style="min-width: 180px;">
         Import Statblock
     </button>
   `);
@@ -62,18 +53,6 @@ async function showImportDialog(): Promise<void> {
                     <label><strong>Paste Statblock:</strong></label>
                     <textarea class="statblock-text-area"></textarea>
                 </div>
-                
-                <div style="background: #f0f0f0; padding: 0.75em; border-radius: 4px; font-size: 0.85em; margin-top: 0.5em;">
-                    <strong>Supported Formats:</strong>
-                    <ul style="margin: 0.5em 0; padding-left: 1.5em;">
-                        <li><strong>Humanoid NPCs/PCs:</strong> With class levels, attributes (ST, DX, etc.), gear</li>
-                        <li><strong>Monsters:</strong> Simplified statblocks with special abilities</li>
-                    </ul>
-                    <p style="margin: 0.5em 0 0 0; color: #666;">
-                        Fields separated by <code>|</code> pipes. Example:<br>
-                        <code style="font-size: 0.9em;">AL N | SZ M | MV 40 | AC 7 | HD 1 (hp 7)</code>
-                    </p>
-                </div>
             </form>
         `,
         buttons: {
@@ -86,7 +65,6 @@ async function showImportDialog(): Promise<void> {
 
                     if (!statblockText || statblockText.trim().length === 0) {
                         // @ts-ignore
-                        ui.notifications.error("Please paste a statblock before importing!");
                         return;
                     }
 
@@ -98,6 +76,8 @@ async function showImportDialog(): Promise<void> {
                         // @ts-ignore
                         const created = Actor.create(actorData);
                         if (created) {
+                            console.log(created);
+
                             // @ts-ignore
                             ui.notifications.info(`Imported: ${created.name}`);
                         } else {    // @ts-ignore

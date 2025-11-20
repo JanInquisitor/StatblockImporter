@@ -170,10 +170,7 @@ function mapCharacterToFoundry(npc: CharacterNPC): any {
             },
 
             // HD
-            hd: {
-                value: npc.hitDice || "1d8",
-                max: npc.level || 1
-            },
+            hd: npc.hitDice = "d" + npc.hitDice || "1d8",
 
             // AC (must be nested object with value, dr, notes)
             ac: {
@@ -267,10 +264,11 @@ export function mapMonsterToFoundry(npc: any): any {
                 class: npc.class || "Fighter",
                 race: ""
             },
+            hd: npc.hitDice = "d" + npc.hitDice || "1d8",
             dx: npc.abilities?.dexterity ?? 10,
             hp: {
-                value: npc.hitPoints ?? 8,
-                max: npc.hitPoints ?? 8,
+                min: npc.hitPoints ?? 8,
+                max: npc.hitPoints ?? 0,
                 temp: 0,
                 tempmax: 0
             },
@@ -288,12 +286,13 @@ export function mapMonsterToFoundry(npc: any): any {
             otherMv: {value: ''},
             proficiencies: {class: "", lvl4: "", lvl8: "", lvl12: ""},
             initiative: {bonus: 0},
-            fa: npc.hitDice ?? 1,
+            fa: npc.hitDice ?? "1",
             ca: 0,
             ta: 0,
             save: 15,
             morale: 8,
-            encLair: npc.lair ?? "",
+            encLair: npc.numberInLair ?? "",
+            encWild: npc.numberEncountered ?? "",
             atkRate: npc.atkRate ?? "1",
             saves: {
                 death: {value: npc.baseSave ?? 10},
