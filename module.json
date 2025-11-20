@@ -13,7 +13,7 @@
     "verified": "13"
   },
   "esmodules": [
-    "src/statblockImporter.ts.ts"
+    "src/statblockImporter.ts"
   ],
   "url": "https://github.com/JanInquisitor/StatblockImporter",
   "manifest": "https://raw.githubusercontent.com/JanInquisitor/StatblockImporter/main/module.json",
