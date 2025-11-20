@@ -1,5 +1,5 @@
-import {CharacterNPC, parseCharacterStatBlock, parseStatBlock} from "./parser.js";
-import {mapMonsterToFoundry, mapToFoundryActor} from "./mapper.js";
+import {CharacterNPC, parseCharacterStatBlock, parseStatBlock} from "./parser";
+import {mapMonsterToFoundry, mapToFoundryActor} from "./mapper";
 
 // @ts-ignore
 Hooks.once('init', () => {
