@@ -302,7 +302,7 @@ export function mapMonsterToFoundry(npc: any): any {
                 sorcery: {value: npc.baseSave ?? 10},
             },
             money: {cp: {value: 0}, ep: {value: 0}, gp: {value: 0}, pp: {value: 0}, sp: {value: 0}},
-            treasure: npc.treasure ?? "",
+            treasure: npc.treasureClass ?? "",
             xp: npc.xp ?? 0,
             special: "",
             gear: "",
