@@ -1,7 +1,7 @@
 {
-  "id": "hyperborea-statblock-importer",
-  "title": "Hyperborea Statblock Importer",
-  "description": "Paste a statblock and create an in-world Actor for the Hyperborea 3rd Edition system.",
+  "id": "statblock-importer",
+  "title": "Statblock Importer",
+  "description": "Paste a monster NPC statblock and instantly create a fully populated Actor.",
   "version": "1.0.0",
   "authors": [
     {
@@ -10,18 +10,16 @@
   ],
   "compatibility": {
     "minimum": "12",
-    "verified": "13",
-    "maximum": "13"
+    "verified": "13"
   },
-  "esmodules": ["statblockImporter.js"],
-  "languages": [],
-  "relationships": {
-    "systems": [
-      {
-        "id": "hyp3e",
-        "type": "system"
-      }
-    ]
-  },
-  "license": "MIT"
+  "esmodules": [
+    "statblockImporter.js"
+  ],
+  "url": "https://github.com/JanInquisitor/StatblockImporter",
+  "manifest": "https://raw.githubusercontent.com/JanInquisitor/StatblockImporter/main/module.json",
+  "download": "https://github.com/JanInquisitor/StatblockImporter/archive/refs/heads/main.zip",
+  "license": "MIT",
+  "readme": "README.md",
+  "bugs": "https://github.com/JanInquisitor/StatblockImporter/issues",
+  "changelog": "https://github.com/JanInquisitor/StatblockImporter/blob/main/CHANGELOG.md"
 }
