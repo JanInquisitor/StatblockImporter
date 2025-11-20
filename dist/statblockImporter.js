@@ -1,41 +1,34 @@
-import {CharacterNPC, parseCharacterStatBlock, parseStatBlock} from "./parser.js";
-import {mapMonsterToFoundry, mapToFoundryActor} from "./mapper.js";
-
+import { parseStatBlock } from "./parser.js";
+import { mapMonsterToFoundry } from "./mapper.js";
 // @ts-ignore
 Hooks.once('init', () => {
     // @ts-ignore
-    if (game.system.id !== 'hyp3e') return;
+    if (game.system.id !== 'hyp3e')
+        return;
     // console.log('Statblock Importer Module initialized');
     console.log("%c HYPERBOREA STATBLOCK IMPORTER LOADED ", "background: #722; color: white; font-size: 16px");
 });
-
-
 // @ts-ignore
 Hooks.on('renderActorDirectory', (app, html, data) => {
     // @ts-ignore
-    if (game.system.id !== 'hyp3e') return;
-
+    if (game.system.id !== 'hyp3e')
+        return;
     html.querySelector('.statblock-import-button')?.remove();
-
     // Create the button element
     const importButton = $(`
     <button class="statblock-import-button" style="min-width: 180px;">
         Import Statblock
     </button>
   `);
-
     // console.log(html);
     html.querySelector('footer.directory-footer').insertAdjacentElement('afterend', importButton[0]);
-
-    importButton.on('click', async (event: Event) => {
+    importButton.on('click', async (event) => {
         event.preventDefault();
         await showImportDialog();
     });
     // importButton.remove();
 });
-
-
-async function showImportDialog(): Promise<void> {
+async function showImportDialog() {
     // @ts-ignore
     new Dialog({
         title: "Import Statblock",
@@ -59,34 +52,28 @@ async function showImportDialog(): Promise<void> {
             import: {
                 icon: '<i class="fas fa-check"></i>',
                 label: "Import Actor",
-                callback: (html: JQuery) => {
-
-                    const statblockText = html.find('.statblock-text-area').val() as string;
-
+                callback: (html) => {
+                    const statblockText = html.find('.statblock-text-area').val();
                     if (!statblockText || statblockText.trim().length === 0) {
                         // @ts-ignore
                         return;
                     }
-
-                    let npc: CharacterNPC = parseStatBlock(statblockText);
-
+                    let npc = parseStatBlock(statblockText);
                     let actorData = mapMonsterToFoundry(npc);
-
                     try {
                         // @ts-ignore
                         const created = Actor.create(actorData);
                         if (created) {
                             console.log(created);
-
                             // @ts-ignore
                             ui.notifications.info(`Imported: ${created.name}`);
-                        } else {    // @ts-ignore
-
+                        }
+                        else { // @ts-ignore
                             ui.notifications.error("Creation failed.");
                         }
-                    } catch (error) {
+                    }
+                    catch (error) {
                         // @ts-ignore
-
                         ui.notifications.error(`Import error: ${error.message}`);
                         console.error(error, actorData);
                     }
@@ -98,13 +85,12 @@ async function showImportDialog(): Promise<void> {
             }
         },
         default: "import",
-        render: (html: JQuery) => {
+        render: (html) => {
             // Auto-focus the textarea
             html.find('#statblock-input').focus().select();
         }
     }).render(true);
 }
-
 // @ts-ignore
 if (typeof module !== 'undefined') {
     // @ts-ignore

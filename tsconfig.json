@@ -9,7 +9,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-    "outDir": "C:\\Users\\PC\\AppData\\Local\\FoundryVTT\\Data\\modules\\hyperborea-statblock-importer",
+    "outDir": "./dist",
     "rootDir": "./src"
   },
 //  "include": ["src", ],
