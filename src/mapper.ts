@@ -70,7 +70,7 @@ function mapCharacterToFoundry(npc: CharacterNPC): any {
             ca: 0,
             ta: 0,
             save: 15,
-            morale: 8,
+            morale: npc.morale ?? 8,
             attacks: {
                 value: "1",
                 note: ""
