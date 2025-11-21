@@ -68,7 +68,7 @@ function mapCharacterToFoundry(npc) {
             ca: 0,
             ta: 0,
             save: 15,
-            morale: 8,
+            morale: npc.morale ?? 8,
             attacks: {
                 value: "1",
                 note: ""
@@ -282,7 +282,7 @@ export function mapMonsterToFoundry(npc) {
                 sorcery: { value: npc.baseSave ?? 10 },
             },
             money: { cp: { value: 0 }, ep: { value: 0 }, gp: { value: 0 }, pp: { value: 0 }, sp: { value: 0 } },
-            treasure: npc.treasure ?? "",
+            treasure: npc.treasureClass ?? "",
             xp: npc.xp ?? 0,
             special: "",
             gear: "",
