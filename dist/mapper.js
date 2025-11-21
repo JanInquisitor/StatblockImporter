@@ -95,135 +95,6 @@ function mapCharacterToFoundry(npc) {
         //     [game.user.id]: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER
         // },
     };
-    const fakeActorData = {
-        name: npc.name || "Unnamed Character",
-        type: "character",
-        img: "icons/svg/mystery-man.svg",
-        system: {
-            // Biography
-            biography: {
-                value: npc.description ?? "",
-                public: false
-            },
-            // Details
-            details: {
-                alignment: npc.alignment || "N",
-                level: npc.level || 1,
-                class: npc.class || "Fighter",
-                xp: {
-                    value: npc.xp || 0
-                }
-            },
-            // Abilities (top-level in v2.2.1, not under attributes)
-            abilities: {
-                str: {
-                    value: npc.abilities?.strength || 10,
-                    mod: calculateModifier(npc.abilities?.strength || 10),
-                    proficient: false,
-                    save: 0
-                },
-                dex: {
-                    value: npc.abilities?.dexterity || 10,
-                    mod: calculateModifier(npc.abilities?.dexterity || 10),
-                    proficient: false,
-                    save: 0
-                },
-                con: {
-                    value: npc.abilities?.constitution || 10,
-                    mod: calculateModifier(npc.abilities?.constitution || 10),
-                    proficient: false,
-                    save: 0
-                },
-                int: {
-                    value: npc.abilities?.intelligence || 10,
-                    mod: calculateModifier(npc.abilities?.intelligence || 10),
-                    proficient: false,
-                    save: 0
-                },
-                wis: {
-                    value: npc.abilities?.wisdom || 10,
-                    mod: calculateModifier(npc.abilities?.wisdom || 10),
-                    proficient: false,
-                    save: 0
-                },
-                cha: {
-                    value: npc.abilities?.charisma || 10,
-                    mod: calculateModifier(npc.abilities?.charisma || 10),
-                    proficient: false,
-                    save: 0
-                }
-            },
-            // HP (must be nested object)
-            hp: {
-                value: npc.hitPoints || 8,
-                max: npc.hitPoints || 8,
-                temp: 0,
-                tempmax: 0
-            },
-            // HD
-            hd: npc.hitDice = "d" + npc.hitDice || "1d8",
-            // AC (must be nested object with value, dr, notes)
-            ac: {
-                value: npc.ac || 10,
-                dr: npc.dr || 0,
-                notes: npc.acVariant || ""
-            },
-            // Movement (THIS WAS THE CRASH — must be { value, notes })
-            mv: {
-                value: npc.movement || 30,
-                notes: npc.movementNote || ""
-            },
-            // Combat
-            combat: {
-                fa: npc.fightingAbility || 0,
-                ta: npc.turningAbility || 0,
-                ca: npc.castingAbility || 0,
-                attacksPerRound: npc.attacksPerRound || "1",
-                morale: npc.morale || 8
-            },
-            // Saves (nested object)
-            saves: {
-                base: npc.baseSave || 16,
-                modifiers: npc.saveModifiers || "",
-                death: extractSaveModifier(npc.saveModifiers, 'death'),
-                transformation: extractSaveModifier(npc.saveModifiers, 'transformation'),
-                device: extractSaveModifier(npc.saveModifiers, 'device'),
-                avoidance: extractSaveModifier(npc.saveModifiers, 'avoidance'),
-                sorcery: extractSaveModifier(npc.saveModifiers, 'sorcery')
-            },
-            // Special
-            special: {
-                value: npc.special || "",
-                abilities: npc.specialAbilitiesParsed || []
-            },
-            // Size/Physical
-            size: npc.size || "M",
-            height: npc.height || "",
-            weight: npc.weight || "",
-            // Currency
-            currency: {
-                cp: npc.wealth?.copper || 0,
-                sp: npc.wealth?.silver || 0,
-                ep: npc.wealth?.electrum || 0,
-                gp: npc.wealth?.gold || 0,
-                pp: npc.wealth?.platinum || 0
-            },
-            // Notes
-            notes: {
-                value: "",
-                public: ""
-            }
-        },
-        items: [],
-        effects: [],
-        flags: {
-            hyp3e: {
-                imported: true,
-                importDate: new Date().toISOString(),
-                classInfo: npc.classInfo || ""
-            }
-        }
-    };
     return actorData;
 }
 /**
@@ -270,7 +141,7 @@ export function mapMonsterToFoundry(npc) {
             ca: 0,
             ta: 0,
             save: 15,
-            morale: 8,
+            morale: npc.morale ?? 8,
             encLair: npc.numberInLair ?? "",
             encWild: npc.numberEncountered ?? "",
             atkRate: npc.atkRate ?? "1",
