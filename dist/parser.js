@@ -13,13 +13,13 @@
 export const StatBlockPatterns = {
     /**
      * Extract character name and class info
-     * Matches: "RAGNARR THE SEA-WOLF (9th-level fighter)"
+     * Matches: "Charater's Name (9th-level fighter)"
      * Groups: [1] = name, [2] = class info
      */
     nameAndClass: /^\s*([A-Z][A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ\s'-]+?)\s*\(([^)]+)\)/m,
     /**
      * Extract just the name (alternative)
-     * Matches: "RAGNARR THE SEA-WOLF"
+     * Matches: "Characters Name"
      */
     nameOnly: /^([A-Z][A-Z\s'-]+?)(?:\s*\(|$)/m,
     /**
@@ -46,7 +46,7 @@ export const StatBlockPatterns = {
     size: /SZ\s+([A-Z])\s*(?:\(([^,]+),\s*([^)]+)\))?/,
     /**
      * Movement rate
-     * Matches: "MV 40" or "MV 20 (bad knee)"
+     * Matches: "MV 30" or "MV 20"
      */
     movement: /MV\s+(\d+)(?:\s*\(([^)]+)\))?/,
     /**
@@ -78,7 +78,7 @@ export const StatBlockPatterns = {
     numAttacks: /#A\s+([\d/]+)\s*\(([^)]+)\)/,
     /**
      * Damage
-     * Note: Use negative lookbehind to avoid matching "HD" as "D"
+     * Note: Use negative look behind to avoid matching "HD" as "D"
      */
     damage: /(?<!H)D\s+([^|]+?)(?=\s*\||$)/,
     /**
@@ -97,7 +97,7 @@ export const StatBlockPatterns = {
     // ==================== ABILITY SCORES ====================
     /**
      * All ability scores in one line
-     * Matches: "ST 17, DX 10, CN 15, IN 12, WS 16, CH 18"
+     * Matches: "ST 10, DX 10, CN 10, IN 10, WS 10, CH 10"
      */
     abilityScores: /ST\s+(\d+),\s*DX\s+(\d+),\s*CN\s+(\d+),\s*IN\s+(\d+),\s*WS\s+(\d+),\s*CH\s+(\d+)/,
     strength: /ST\s+(\d+)/,
