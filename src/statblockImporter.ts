@@ -1,5 +1,8 @@
-import {CharacterNPC, parseCharacterStatBlock, parseStatBlock} from "./parser.js";
+import {CharacterNPC, parseStatBlock} from "./parser.js";
 import {mapMonsterToFoundry, mapToFoundryActor} from "./mapper.js";
+
+
+// Foundry Hooks
 
 // @ts-ignore
 Hooks.once('init', () => {
@@ -8,7 +11,6 @@ Hooks.once('init', () => {
     // console.log('Statblock Importer Module initialized');
     console.log("%c HYPERBOREA STATBLOCK IMPORTER LOADED ", "background: #722; color: white; font-size: 16px");
 });
-
 
 // @ts-ignore
 Hooks.on('renderActorDirectory', (app, html, data) => {
@@ -60,33 +62,25 @@ async function showImportDialog(): Promise<void> {
                 icon: '<i class="fas fa-check"></i>',
                 label: "Import Actor",
                 callback: (html: JQuery) => {
-
                     const statblockText = html.find('.statblock-text-area').val() as string;
-
                     if (!statblockText || statblockText.trim().length === 0) {
                         // @ts-ignore
                         return;
                     }
-
                     let npc: CharacterNPC = parseStatBlock(statblockText);
-
                     let actorData = mapMonsterToFoundry(npc);
-
                     try {
                         // @ts-ignore
                         const created = Actor.create(actorData);
                         if (created) {
                             console.log(created);
-
                             // @ts-ignore
                             ui.notifications.info(`Imported: ${created.name}`);
                         } else {    // @ts-ignore
-
                             ui.notifications.error("Creation failed.");
                         }
                     } catch (error) {
                         // @ts-ignore
-
                         ui.notifications.error(`Import error: ${error.message}`);
                         console.error(error, actorData);
                     }
@@ -98,6 +92,7 @@ async function showImportDialog(): Promise<void> {
             }
         },
         default: "import",
+        resizable: true,
         render: (html: JQuery) => {
             // Auto-focus the textarea
             html.find('#statblock-input').focus().select();

@@ -129,17 +129,17 @@ export type ParsedStatBlock = CharacterNPC | Monster;
 
 // ==================== REGEX PATTERNS ====================
 
-export const StatBlockPatterns = {
+const StatBlockPatterns = {
     /**
      * Extract character name and class info
-     * Matches: "Charater's Name (9th-level fighter)"
+     * Matches: "RAGNARR THE SEA-WOLF (9th-level fighter)"
      * Groups: [1] = name, [2] = class info
      */
     nameAndClass: /^\s*([A-Z][A-ZÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜÝÞ\s'-]+?)\s*\(([^)]+)\)/m,
 
     /**
      * Extract just the name (alternative)
-     * Matches: "Characters Name"
+     * Matches: "RAGNARR THE SEA-WOLF"
      */
     nameOnly: /^([A-Z][A-Z\s'-]+?)(?:\s*\(|$)/m,
 
@@ -172,7 +172,7 @@ export const StatBlockPatterns = {
 
     /**
      * Movement rate
-     * Matches: "MV 30" or "MV 20"
+     * Matches: "MV 40" or "MV 20 (bad knee)"
      */
     movement: /MV\s+(\d+)(?:\s*\(([^)]+)\))?/,
 
@@ -211,7 +211,7 @@ export const StatBlockPatterns = {
 
     /**
      * Damage
-     * Note: Use negative look behind to avoid matching "HD" as "D"
+     * Note: Use negative lookbehind to avoid matching "HD" as "D"
      */
     damage: /(?<!H)D\s+([^|]+?)(?=\s*\||$)/,
 
@@ -235,7 +235,7 @@ export const StatBlockPatterns = {
 
     /**
      * All ability scores in one line
-     * Matches: "ST 10, DX 10, CN 10, IN 10, WS 10, CH 10"
+     * Matches: "ST 17, DX 10, CN 15, IN 12, WS 16, CH 18"
      */
     abilityScores: /ST\s+(\d+),\s*DX\s+(\d+),\s*CN\s+(\d+),\s*IN\s+(\d+),\s*WS\s+(\d+),\s*CH\s+(\d+)/,
 
@@ -335,6 +335,7 @@ export const StatBlockPatterns = {
     monsterDescription: /:\s+(.+?)(?=\s*#E\s+)/s
 };
 
+
 // ==================== PARSING FUNCTIONS ====================
 
 /**
@@ -353,18 +354,16 @@ export function parseStatBlock(statBlockText: string): ParsedStatBlock {
 /**
  * Parse character (classed NPC) stat block
  */
-export function parseCharacterStatBlock(statBlockText: string): CharacterNPC {
-    const npc: CharacterNPC = {name: ''};
+function parseCharacterStatBlock(statBlockText: string) {
+    const npc: any = {name: ''};
 
     const originalText = statBlockText;
 
     // Extract name and class BEFORE normalization
     const nameMatch = originalText.match(StatBlockPatterns.nameAndClass);
-
     if (nameMatch) {
         npc.name = nameMatch[1].trim();
         npc.classInfo = nameMatch[2].trim();
-
         const classMatch = nameMatch[2].match(StatBlockPatterns.classLevel);
         if (classMatch) {
             npc.level = parseInt(classMatch[1]);
@@ -377,17 +376,18 @@ export function parseCharacterStatBlock(statBlockText: string): CharacterNPC {
         }
     }
 
-    // Extract description/flavor text BEFORE normalization
-    const descMatch = originalText.match(StatBlockPatterns.description);
-    if (descMatch) {
-        npc.description = descMatch[1].trim();
-    }
-
     // NORMALIZATION STEP
     statBlockText = statBlockText
         .replace(/[\n\r]+/g, ' ')
         .replace(/\s{2,}/g, ' ')
         .replace(/^\s+|\s+$/, '');
+
+
+    const descMatch = originalText.match(StatBlockPatterns.description);
+    if (descMatch) {
+        // npc.description = descMatch[1].trim();
+        npc.description = originalText;
+    }
 
     // Extract alignment
     const alMatch = statBlockText.match(StatBlockPatterns.alignment);
@@ -493,11 +493,12 @@ export function parseCharacterStatBlock(statBlockText: string): CharacterNPC {
             .map(m => m[1].trim())
             .filter(s => s.length > 0);
 
-        npc.wealth = calculateWealth(npc.gearList);
+        // npc.wealth = calculateWealth(npc.gearList);
     }
 
     return npc;
 }
+
 
 /**
  * Parse monster (non-classed NPC) stat block
