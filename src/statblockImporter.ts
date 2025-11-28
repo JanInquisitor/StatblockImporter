@@ -68,7 +68,7 @@ async function showImportDialog(): Promise<void> {
                         return;
                     }
                     let npc: CharacterNPC = parseStatBlock(statblockText);
-                    let actorData = mapMonsterToFoundry(npc);
+                    let actorData = mapToFoundryActor(npc);
                     try {
                         // @ts-ignore
                         const created = Actor.create(actorData);
