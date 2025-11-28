@@ -1,5 +1,6 @@
 import { parseStatBlock } from "./parser.js";
-import { mapMonsterToFoundry } from "./mapper.js";
+import { mapToFoundryActor } from "./mapper.js";
+// Foundry Hooks
 // @ts-ignore
 Hooks.once('init', () => {
     // @ts-ignore
@@ -17,11 +18,12 @@ Hooks.on('renderActorDirectory', (app, html, data) => {
     // Create the button element
     const importButton = $(`
     <button class="statblock-import-button" style="min-width: 180px;">
+        <i class="fas fa-file-import"></i>
         Import Statblock
     </button>
   `);
     // console.log(html);
-    html.querySelector('footer.directory-footer').insertAdjacentElement('afterend', importButton[0]);
+    html.querySelector('footer.directory-footer').append('afterend', importButton[0]);
     importButton.on('click', async (event) => {
         event.preventDefault();
         await showImportDialog();
@@ -59,7 +61,7 @@ async function showImportDialog() {
                         return;
                     }
                     let npc = parseStatBlock(statblockText);
-                    let actorData = mapMonsterToFoundry(npc);
+                    let actorData = mapToFoundryActor(npc);
                     try {
                         // @ts-ignore
                         const created = Actor.create(actorData);
@@ -85,6 +87,7 @@ async function showImportDialog() {
             }
         },
         default: "import",
+        resizable: true,
         render: (html) => {
             // Auto-focus the textarea
             html.find('#statblock-input').focus().select();

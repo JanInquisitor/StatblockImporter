@@ -15,6 +15,7 @@ export function mapToFoundryActor(parsedData) {
 /**
  * Map a character NPC to Foundry Actor data
  */
+// Note: I verified the actorData object is correct.
 function mapCharacterToFoundry(npc) {
     const actorData = {
         name: npc.name || "Imported Character",
@@ -22,71 +23,78 @@ function mapCharacterToFoundry(npc) {
         img: "icons/svg/mystery-man.svg",
         system: {
             biography: npc.description || "",
+            alignment: npc.alignment?.toUpperCase() || "N",
+            atkRate: npc.attacksPerRound || "1/1",
+            attributes: {
+                str: { value: npc.abilities?.strength || 10 },
+                dex: { value: npc.abilities?.dexterity || 10 },
+                con: { value: npc.abilities?.constitution || 10 },
+                int: { value: npc.abilities?.intelligence || 10 },
+                wis: { value: npc.abilities?.wisdom || 10 },
+                cha: { value: npc.abilities?.charisma || 10 }
+            },
             details: {
-                alignment: npc.alignment?.toUpperCase() || "N",
+                age: npc.age,
+                // class: npc.class || "Fighter",
+                complexion: "",
+                gender: "",
+                hair: "",
+                height: "",
+                race: "",
                 level: {
                     value: npc.level ?? 1
                 },
-                class: npc.class || "Fighter",
-                race: "",
-                xp: {
-                    value: npc.xp ?? 0,
-                    bonus: 0,
-                    primeAttr: "",
-                    toNextLvl: 0
-                }
+                notes: npc.notes || "",
+                physicalFeatures: "",
+                religion: "",
+                weight: npc.weight ?? "",
             },
-            attributes: {
-                str: { value: npc.abilities?.strength ?? 10, mod: 0, save: 0, proficient: false },
-                dex: { value: npc.abilities?.strength ?? 10, mod: 0, save: 0, proficient: false },
-                con: { value: npc.abilities?.strength ?? 10, mod: 0, save: 0, proficient: false },
-                int: { value: npc.abilities?.strength ?? 10, mod: 0, save: 0, proficient: false },
-                wis: { value: npc.abilities?.strength ?? 10, mod: 0, save: 0, proficient: false },
-                cha: { value: npc.abilities?.strength ?? 10, mod: 0, save: 0, proficient: false }
-            },
+            hd: npc.hitDice = npc.hitDice || "1d8",
             hp: {
-                value: npc.hitPoints ?? 8,
-                max: npc.hitPoints ?? 8,
-                temp: 0,
-                tempmax: 0
+                value: 1,
+                min: npc.hitPoints ?? 8,
+                max: npc.hitPoints ?? -10,
             },
             ac: {
-                value: npc.ac ?? 10,
+                value: npc.ac ?? 9,
                 dr: npc.dr ?? 0,
-                notes: npc.acVariant ?? ""
+                tempAcMod: 0,
+                tempDrMod: 0
+            },
+            identified: true,
+            knownLanguages: "",
+            money: {
+                cp: { value: 0 },
+                ep: { value: 0 },
+                gp: { value: 0 },
+                pp: { value: 0 },
+                sp: { value: 0 }
             },
             movement: {
-                base: { value: npc.movement ?? 30 },
-                exploration: { value: npc.movement ?? 30 },
+                base: { value: npc.movement ?? 40 },
+                exploration: { value: npc.movement ?? 120 },
                 tempMvMod: 0,
                 travel: { value: 24 }
             },
             otherMv: { value: '' },
             proficiencies: { class: "", lvl4: "", lvl8: "", lvl12: "" },
-            initiative: { bonus: 0 },
-            fa: 0,
+            fa: npc.fightingAbility ?? "1",
             ca: 0,
             ta: 0,
             save: 15,
             morale: npc.morale ?? 8,
-            attacks: {
-                value: "1",
-                note: ""
-            },
             saves: {
-                death: { value: 10 },
-                transformation: { value: 8 },
-                device: { value: 8 },
-                avoidance: { value: 8 },
-                sorcery: { value: 8 },
+                death: { value: npc.baseSave ?? 10 },
+                transformation: { value: npc.baseSave ?? 10 },
+                device: { value: npc.baseSave ?? 10 },
+                avoidance: { value: npc.baseSave ?? 10 },
+                sorcery: { value: npc.baseSave ?? 10 },
             },
-            money: { cp: { value: 0 }, ep: { value: 0 }, gp: { value: 0 }, pp: { value: 0 }, sp: { value: 0 } },
-            treasure: "",
+            treasure: npc.treasureClass ?? "",
+            xp: npc.xp ?? 0,
             special: "",
             gear: "",
-            size: "M",
-            height: "",
-            weight: "",
+            size: npc.size ?? "M",
             notes: { value: "", public: "" }
         },
         // ── OWNERSHIP & FLAGS ─────────────────────────────────
