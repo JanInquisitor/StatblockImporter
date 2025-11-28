@@ -28,7 +28,7 @@ Hooks.on('renderActorDirectory', (app, html, data) => {
   `);
 
     // console.log(html);
-    html.querySelector('footer.directory-footer').append('afterend', importButton[0]);
+    html.querySelector('footer.directory-footer').append(importButton[0]);
 
     importButton.on('click', async (event: Event) => {
         event.preventDefault();
