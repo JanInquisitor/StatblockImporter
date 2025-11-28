@@ -2,7 +2,7 @@
   "id": "statblock-importer",
   "title": "Statblock Importer",
   "description": "Paste a monster NPC statblock and instantly create a fully populated Actor.",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "authors": [
     {
       "name": "JanInquisitor"
