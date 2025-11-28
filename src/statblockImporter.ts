@@ -22,12 +22,13 @@ Hooks.on('renderActorDirectory', (app, html, data) => {
     // Create the button element
     const importButton = $(`
     <button class="statblock-import-button" style="min-width: 180px;">
+        <i class="fas fa-file-import"></i>
         Import Statblock
     </button>
   `);
 
     // console.log(html);
-    html.querySelector('footer.directory-footer').appendChild('afterend', importButton[0]);
+    html.querySelector('footer.directory-footer').append('afterend', importButton[0]);
 
     importButton.on('click', async (event: Event) => {
         event.preventDefault();
