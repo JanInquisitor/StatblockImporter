@@ -10,7 +10,7 @@ export function mapToFoundryActor(parsedData: ParsedStatBlock): any {
     if ('type' in parsedData && parsedData.type === 'monster') {
         return mapMonsterToFoundry(parsedData);
     } else {
-        return mapCharacterToFoundry(parsedData as CharacterNPC);
+        return mapCharacterToFoundry(parsedData);
     }
 }
 

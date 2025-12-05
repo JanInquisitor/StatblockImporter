@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es2020",
-    "lib": ["es2020", "dom", "dom.iterable"],
+    "lib": [
+      "es2020",
+      "dom",
+      "dom.iterable"
+    ],
     "module": "esnext",
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -9,11 +13,15 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "skipLibCheck": true,
-//    "outDir": "./dist",
     "outDir": "./dist",
     "rootDir": "./src"
   },
-//  "include": ["src", ],
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist"]
+  //  "include": ["src", ],
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

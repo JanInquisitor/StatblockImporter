@@ -178,9 +178,10 @@ const StatBlockPatterns = {
 
     /**
      * Armor Class (with optional variants)
-     * Matches: "AC 3 DR 1" or "AC 9 (8 vs. melee w/quarterstaff)"
+     * Matches: "AC 3 DR 1" or "AC -2" or "AC 9 (8 vs. melee w/quarterstaff)" or "AC 0"
+     * Groups: [1] = base AC (can be negative), [2] = DR value (optional), [3] = AC variant (optional)
      */
-    armorClass: /AC\s+(\d+)(?:\s+DR\s+(\d+))?(?:\s*\(([^)]+)\))?/,
+    armorClass: /AC\s+(-?\d+)(?:\s+DR\s+(\d+))?(?:\s*\(([^)]+)\))?/,
 
     /**
      * Hit Dice and Hit Points
@@ -343,7 +344,6 @@ const StatBlockPatterns = {
  */
 export function parseStatBlock(statBlockText: string): ParsedStatBlock {
     const isMonster = statBlockText.includes('#E');
-    console.log(`Parsing ${isMonster ? 'monster' : 'character'} stat block`);
     if (isMonster) {
         return parseMonsterStatBlock(statBlockText);
     } else {
@@ -381,6 +381,7 @@ function parseCharacterStatBlock(statBlockText: string) {
         .replace(/[\n\r]+/g, ' ')
         .replace(/\s{2,}/g, ' ')
         .replace(/^\s+|\s+$/, '');
+        // .replace(/[−–—]/g, '-');
 
 
     const descMatch = originalText.match(StatBlockPatterns.description);
@@ -411,8 +412,10 @@ function parseCharacterStatBlock(statBlockText: string) {
     // Extract AC
     const acMatch = statBlockText.match(StatBlockPatterns.armorClass);
     if (acMatch) {
-        npc.ac = parseInt(acMatch[1]);
-        npc.dr = acMatch[2] ? parseInt(acMatch[2]) : null;
+        // Normalize any dash character to hyphen-minus before parsing
+        const acValue = acMatch[1].replace(/[−–—]/g, '-');
+        npc.ac = parseInt(acValue, 9);
+        npc.dr = acMatch[2] ? parseInt(acMatch[2], 10) : null;
         npc.acVariant = acMatch[3] || null;
     }
 
@@ -568,10 +571,16 @@ export function parseMonsterStatBlock(statBlockText: string): Monster {
     // Extract AC
     const acMatch = statBlockText.match(StatBlockPatterns.armorClass);
     if (acMatch) {
-        monster.ac = parseInt(acMatch[1]);
-        monster.dr = acMatch[2] ? parseInt(acMatch[2]) : null;
+        // Normalize any dash character to hyphen-minus before parsing
+        console.log(acMatch)
+        const acValue = acMatch[1].replace(/[−–—]/g, '-');
+        console.log(acValue)
+        monster.ac = parseInt(acValue, 9);
+        console.log(monster.ac);
+        monster.dr = acMatch[2] ? parseInt(acMatch[2], 10) : null;
         monster.acVariant = acMatch[3] || null;
     }
+
 
     // Extract HD and HP
     const hdMatch = statBlockText.match(StatBlockPatterns.hitDice);
