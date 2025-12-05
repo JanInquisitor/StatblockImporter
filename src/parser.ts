@@ -381,8 +381,8 @@ function parseCharacterStatBlock(statBlockText: string) {
     statBlockText = statBlockText
         .replace(/[\n\r]+/g, ' ')
         .replace(/\s{2,}/g, ' ')
-        .replace(/^\s+|\s+$/, '');
-        // .replace(/[−–—]/g, '-');
+        .replace(/^\s+|\s+$/, '')
+        .replace(/[−–—]/g, '-');  // Normalize all dash types to hyphen-minus
 
 
     const descMatch = originalText.match(StatBlockPatterns.description);
@@ -410,13 +410,10 @@ function parseCharacterStatBlock(statBlockText: string) {
         npc.movementNote = mvMatch[2] || null;
     }
 
-    // Extract AC
     const acMatch = statBlockText.match(StatBlockPatterns.armorClass);
     if (acMatch) {
-        // Normalize any dash character to hyphen-minus before parsing
-        const acValue = acMatch[1].replace(/[−–—]/g, '-');
-        npc.ac = parseInt(acValue, 9);
-        npc.dr = acMatch[2] ? parseInt(acMatch[2], 10) : null;
+        npc.ac = parseInt(acMatch[1].replace(/[−–—]/g, '-'), 10);
+        npc.dr = acMatch[2] ? parseInt(acMatch[2].replace(/[−–—]/g, '-'), 10) : null;
         npc.acVariant = acMatch[3] || null;
     }
 

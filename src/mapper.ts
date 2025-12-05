@@ -128,7 +128,7 @@ export function mapMonsterToFoundry(npc: any): any {
                 class: npc.class || "Fighter",
                 race: ""
             },
-            hd: npc.hitDice = "d" + npc.hitDice || "1d8",
+            hd: npc.hitDice = npc.hitDice || "1d8",
             dx: npc.abilities?.dexterity ?? 10,
             hp: {
                 min: npc.hitPoints ?? 8,
